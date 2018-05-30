@@ -3,11 +3,19 @@
 Created on Sun Jan  7 21:23:35 2018
 
 @author: Ayberk Yaraneri
+
+This is a simple tool I built to calculate and visualize the relationship
+between an aircraft's wing area and its minimum flying speed (stall speed, or Vstall)
+for given parmeters.
+
+All units are metric.
+
+Formula used: Vstall = (2/Clmax)^0.5 * (((weight*g)/area)/rho)^0.5
 """
 import math
 import pylab as plt
 
-#   Vstall = (2/Clmax)^0.5 * (((weight*g)/area)/rho)^0.5
+
 
 airframe = 0.7  #Airframe empty weight. (Without payload)
 payload = 0.35  #Payload weight
@@ -67,7 +75,12 @@ plt.figure('Vstall')
 plt.plot(area_vals, Vstall_vals, color = 'm', label = 'Stall Speed')
 plt.axhline(y = Vthrow, color = 'r', label = 'Launch Velocity')
 plt.plot(optimum_area, (Vstall_calculate(weight, optimum_area, rho, Clmax, g, Vthrow)), '*', markersize = '8.0', color = 'g', label = 'Optimum Wing Area')
-plt.plot(0.135, (Vstall_calculate(weight, 0.135, rho, Clmax, g, Vthrow)), '*', markersize = '8.0', color = (1, 0.9, 0.1), label = 'Chosen Wing Area')
+#^Plots the optimum wing area: the smallest wing area possible while maintaining flight ability at launch. NOT recommended to use this value,
+#as there is no margin of error. Recommended to decrease wing loading for added safety.
+
+#plt.plot(0.135, (Vstall_calculate(weight, 0.135, rho, Clmax, g, Vthrow)), '*', markersize = '8.0', color = (1, 0.9, 0.1), label = 'Chosen Wing Area')
+#^Used to show the wing area my team and I used for our competition UAV. 
+
 plt.legend()
 plt.ylabel('Stall Speed (Km/h)')
 plt.xlabel('Wing Area (m^2)')
